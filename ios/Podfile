@@ -8,6 +8,8 @@ target 'FleetMgmtApp' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
   target 'FleetMgmtAppTests' do
     inherit! :complete
     # Pods for testing
@@ -30,4 +32,8 @@ target 'FleetMgmtApp-tvOS' do
     inherit! :search_paths
     # Pods for testing
   end
+end
+
+target 'OneSignalNotificationServiceExtension' do
+  pod 'OneSignal', '>= 2.9.3', '< 3.0'
 end

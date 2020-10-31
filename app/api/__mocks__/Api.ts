@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { RemoteApi } from '../../Types';
 
-export const Api: any = {
+export const Api: RemoteApi = {
   get: async (path: string, params = {}) => {
     let response = await axios.get(path, params);
     return response.data;

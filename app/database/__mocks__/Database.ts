@@ -1,6 +1,6 @@
-import {get, startsWith} from 'lodash';
-import {DatabaseApi} from '../../types';
-import {buildQuery} from '../DbHelper';
+import { get, startsWith } from 'lodash';
+import { DatabaseApi } from '../../Types';
+import { buildQuery } from '../DbHelper';
 
 const BetterDatabase = require('better-sqlite3');
 export const Db = new BetterDatabase(':memory:');
@@ -25,6 +25,7 @@ const initializeDatabase = (): DatabaseApi => {
         resolve(data);
       });
     },
+
     getAll: async (sqlQuery: string): Promise<Array<any>> => {
       return Api.run(sqlQuery);
     },
@@ -55,7 +56,7 @@ const initializeDatabase = (): DatabaseApi => {
     dropTables: async (tableNames: Array<string>) => {
       const transactions: Array<Promise<boolean>> = [];
       for (let i = 0; i < tableNames.length; i++) {
-        transactions.push(Api.run('DROP TABLE ' + tableNames[i]));
+        transactions.push(Api.run('DROP TABLE IF EXISTS ' + tableNames[i]));
       }
       return Promise.all(transactions);
     },

@@ -5,12 +5,12 @@ import {
   SQLiteDatabase,
   Transaction,
 } from 'react-native-sqlite-storage';
-import {get} from 'lodash';
-import {DatabaseApi} from '../types';
-import {buildQuery} from './DbHelper';
+import { get } from 'lodash';
+import { DatabaseApi } from '../Types';
+import { buildQuery } from './DbHelper';
 
 const Db: SQLiteDatabase = openDatabase(
-  {name: 'truckx_dispatcher', location: 'default'},
+  { name: 'truckx_dispatcher', location: 'default' },
   () => {},
   (_er: SQLError) => {},
 );
@@ -77,7 +77,7 @@ const initializeDatabase = (): DatabaseApi => {
     update: async () => {},
     insert: async (tableName: string, row: any) => {
       let sqlQuery: string = buildQuery(tableName, row);
-      return new Promise<{insertId: number}>((resolve, reject) => {
+      return new Promise<{ insertId: number }>((resolve, reject) => {
         Db.transaction((tx: Transaction) => {
           tx.executeSql(
             sqlQuery,
@@ -100,7 +100,7 @@ const initializeDatabase = (): DatabaseApi => {
     replace: async (_tableName: string, _row: any) => {},
     replaceAll: async () => {},
     truncate: async (tableNames: Array<string>) => {
-      const transactions: Array<Promise<boolean>> = [];
+      const transactions: Array<Promise<boolean | any>> = [];
       for (let i = 0; i < tableNames.length; i++) {
         transactions.push(
           new Promise<boolean>((resolve, reject) => {
@@ -120,13 +120,13 @@ const initializeDatabase = (): DatabaseApi => {
       return Promise.all(transactions);
     },
     dropTables: async (tableNames: Array<string>) => {
-      const transactions: Array<Promise<boolean>> = [];
+      const transactions: Array<Promise<boolean | any>> = [];
       for (let i = 0; i < tableNames.length; i++) {
         transactions.push(
           new Promise<boolean>((resolve, reject) => {
             Db.transaction((tx: Transaction) => {
               tx.executeSql(
-                'DROP TABLE ' + tableNames[i],
+                'DROP TABLE IF EXISTS ' + tableNames[i],
                 [],
                 (_tx: Transaction, _resultSet: ResultSet) => {
                   resolve(true);

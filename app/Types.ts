@@ -11,3 +11,9 @@ export type DatabaseApi = {
   truncate: Function;
   dropTables: Function;
 };
+
+export type Migrations = {
+  [index: number]: Array<string>;
+};
+
+export type RemoteApi = { get: any; post: any };

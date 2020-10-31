@@ -1,5 +1,5 @@
-import {map} from 'lodash';
-import {format} from 'sqlstring';
+import { map } from 'lodash';
+import { format } from 'sqlstring';
 
 export const buildQuery = (
   tableName: string,
